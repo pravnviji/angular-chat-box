@@ -21,6 +21,22 @@ io.on("connection", (socket) => {
     socket.emit("command", commandObj);
   });
 
+  socket.on("message", (command) => {
+    if(command.author === "admin"){
+    commandProcessor(command.type);
+    console.log(commandObj);
+    socket.emit("message", commandObj);
+    }else{
+      commandObj = {
+        author: "ottonova bot",
+        message: "User not found",
+        authorised: false
+      };
+      socket.emit("message", commandObj);
+    }
+  });
+
+
   socket.on("disconnect", () => {
     console.log("a user disconnected!");
   });
@@ -40,6 +56,7 @@ function commandProcessor(type){
       commandObj = {
         author: "ottonova bot",
         message: "Hey Client, you said 'Hello!', right?",
+        authorised: true
       };
       break;
     case "map":

@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { AuthComponent } from './feature/component/auth/auth.component';
 import { ChatBoxModule } from './feature/chat-box.module';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { FormsModule } from '@angular/forms';
 
 const config: SocketIoConfig = { url: 'http://localhost', options: {} };
 
@@ -19,6 +20,7 @@ const config: SocketIoConfig = { url: 'http://localhost', options: {} };
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     ChatBoxModule,
     SocketIoModule.forRoot(config)

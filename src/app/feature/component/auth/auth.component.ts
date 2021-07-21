@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ChatSocketService } from '../../service';
+import { Observable, Subscription } from 'rxjs';
+import { ChatSocketService, ChatCommandTypes, MessageCommand, Logger } from '../../service';
+import { UserForm } from './user-model';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-auth',
@@ -9,28 +12,41 @@ import { ChatSocketService } from '../../service';
 })
 export class AuthComponent implements OnInit {
 
-  public commandData: Observable<any> = this.chatSocketService.commands;
+  public messages$: Observable<any> = this.chatSocketService.messages;
+  public model: UserForm;
+  public subscription!: Subscription;
 
-  constructor(private chatSocketService: ChatSocketService) {
-/*
-    this.chatSocketService.listen('connect').subscribe((data) => {
-      console.log("Connect subscibe");
-      console.log(data);
-    });
+  public fileName = `AuthComponent`;
 
-    this.chatSocketService.emit('message','hii');*/
- 
-    this.commandData.subscribe((data)=>{
-      console.log(" :: commandData ::");
-      console.log(data);
-    })
-  
-
-   }
-
-  ngOnInit(): void {
-      console.log("calling command");
-      this.chatSocketService.sendCommand();
+  constructor(private router: Router,
+    public logger: Logger,
+    private chatSocketService: ChatSocketService) {
+    this.model = new UserForm('', '');
   }
 
+  ngOnInit(): void {
+    this.subscription = this.messages$.subscribe((data) => {
+      this.logger.debug(this.fileName, `:: MessageData ::`);
+      this.logger.debug(this.fileName,data);
+      if (data.authorised) {
+        this
+      } else {
+        alert("Invalid user");
+      }
+    })
+  }
+
+  onSubmit() {
+    const username = this.model.username;
+    const password = this.model.password;
+    this.logger.debug(this.fileName, `OnSubmit`);
+    this.logger.debug(this.fileName, `${username} : ${password}`);
+    const parseCommand: MessageCommand = { type: ChatCommandTypes.Message, author: username };
+    this.chatSocketService.sendMessage(parseCommand);
+  }
+
+  ngOnDestroy(){
+    this.logger.debug(this.fileName, `ngOnDestroy`);
+    this.subscription.unsubscribe();
+  }
 }
