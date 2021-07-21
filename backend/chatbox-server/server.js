@@ -16,12 +16,14 @@ const PORT = process.env.PORT || 80;
 io.on("connection", (socket) => {
   console.log("User connection estabilished");
   socket.on("command", (command) => {
+    console.log(" Command Received");
     commandProcessor(command.type);
     console.log(commandObj);
     socket.emit("command", commandObj);
   });
 
   socket.on("message", (command) => {
+    console.log(" Mesage Received");
     if(command.author === "admin"){
     commandProcessor(command.type);
     console.log(commandObj);
@@ -95,6 +97,12 @@ function commandProcessor(type){
       };
       break;
       default:
+        commandObj = {
+          command: {
+            author: "invalid",
+            message: "Invalid command",
+          },
+        };
         break;
   }
 }

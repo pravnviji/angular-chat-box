@@ -15,11 +15,12 @@ export class AuthComponent implements OnInit {
   public messages$: Observable<any> = this.chatSocketService.messages;
   public model: UserForm;
   public subscription!: Subscription;
+  public author!: string;
 
   public fileName = `AuthComponent`;
 
   constructor(private router: Router,
-    public logger: Logger,
+    private logger: Logger,
     private chatSocketService: ChatSocketService) {
     this.model = new UserForm('', '');
   }
@@ -27,9 +28,11 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
     this.subscription = this.messages$.subscribe((data) => {
       this.logger.debug(this.fileName, `:: MessageData ::`);
-      this.logger.debug(this.fileName,data);
+      this.logger.debug(this.fileName, data);
       if (data.authorised) {
-        this
+        sessionStorage.setItem('author', this.author);
+        this.router.navigate(['home']);
+        this.logger.debug(this.fileName, "navigate");
       } else {
         alert("Invalid user");
       }
@@ -41,11 +44,12 @@ export class AuthComponent implements OnInit {
     const password = this.model.password;
     this.logger.debug(this.fileName, `OnSubmit`);
     this.logger.debug(this.fileName, `${username} : ${password}`);
+    this.author = (this.model.username) ? this.model.username : '';
     const parseCommand: MessageCommand = { type: ChatCommandTypes.Message, author: username };
     this.chatSocketService.sendMessage(parseCommand);
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.logger.debug(this.fileName, `ngOnDestroy`);
     this.subscription.unsubscribe();
   }

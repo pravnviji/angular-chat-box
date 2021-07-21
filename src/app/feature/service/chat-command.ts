@@ -13,4 +13,5 @@ export interface ChatCommand{
 export interface MessageCommand{
     type : ChatCommandTypes.Message;
     author : string | undefined;
+    message?: string;
 }

@@ -1,24 +1,29 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './component/home/home.component';
-import { MapComponent } from './component/map/map.component';
-import { DateComponent } from './component/date/date.component';
-import { RateComponent } from './component/rate/rate.component';
+import { AuthComponent,HomeComponent, MapComponent, DateComponent, RateComponent } from './component';
 
 import { ChatFeatureRoutingModule } from './chat-box-routing.module';
 
+const chatComponents = [
+  AuthComponent,
+  HomeComponent,
+  MapComponent,
+  DateComponent,
+  RateComponent
+];
+
 @NgModule({
   declarations: [
-    HomeComponent,
-    MapComponent,
-    DateComponent,
-    RateComponent
+   ...chatComponents
   ],
   imports: [
     CommonModule,
     FormsModule,
     ChatFeatureRoutingModule
+  ],
+  exports: [
+    ...chatComponents
   ]
 })
 export class ChatBoxModule { }
