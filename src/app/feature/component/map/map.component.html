@@ -1,1 +1,6 @@
-<p>map works!</p>
+<div>Location :</div> 
+<div>
+  <agm-map class="app-map__container" [latitude]="mapData?.data?.lat" [longitude]="mapData?.data?.lng">
+    <agm-marker [latitude]="mapData?.data?.lat" [longitude]="mapData?.data?.lng"></agm-marker>
+  </agm-map>
+</div>

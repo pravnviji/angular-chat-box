@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { ChatSocketService, ChatCommandTypes, MessageCommand, Logger } from '../../service';
+import { ChatSocketService, ChatCommandTypes, IMessageCommand, Logger } from '../../service';
 import { UserForm } from './user-model';
 import { Router } from '@angular/router';
 
@@ -45,7 +45,7 @@ export class AuthComponent implements OnInit {
     this.logger.debug(this.fileName, `OnSubmit`);
     this.logger.debug(this.fileName, `${username} : ${password}`);
     this.author = (this.model.username) ? this.model.username : '';
-    const parseCommand: MessageCommand = { type: ChatCommandTypes.Message, author: username };
+    const parseCommand: IMessageCommand = { type: ChatCommandTypes.Message, author: this.author };
     this.chatSocketService.sendMessage(parseCommand);
   }
 

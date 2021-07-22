@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthComponent,HomeComponent, MapComponent, DateComponent, RateComponent } from './component';
+import { AgmCoreModule } from '@agm/core';
+import { AuthComponent,HomeComponent, MapComponent, DateComponent, RateComponent,MessageComponent} from './component';
 
 import { ChatFeatureRoutingModule } from './chat-box-routing.module';
 
@@ -10,7 +11,8 @@ const chatComponents = [
   HomeComponent,
   MapComponent,
   DateComponent,
-  RateComponent
+  RateComponent,
+  MessageComponent
 ];
 
 @NgModule({
@@ -20,7 +22,10 @@ const chatComponents = [
   imports: [
     CommonModule,
     FormsModule,
-    ChatFeatureRoutingModule
+    ChatFeatureRoutingModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDim47ZPrEAcqBtef0FeldPLJYrcntOm5U'
+    }),
   ],
   exports: [
     ...chatComponents

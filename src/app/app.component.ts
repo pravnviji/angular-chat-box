@@ -14,7 +14,7 @@ export class AppComponent {
   }
 
   ngOnInit(){
-    this.router.navigate(['auth']);
+    this.router.navigate(['home']);
   }
 }
 

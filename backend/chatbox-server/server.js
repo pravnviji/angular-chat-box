@@ -98,10 +98,8 @@ function commandProcessor(type){
       break;
       default:
         commandObj = {
-          command: {
             author: "invalid",
-            message: "Invalid command",
-          },
+            message: "Please enter the Valid Command",
         };
         break;
   }

@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { ChatCommand, MessageCommand } from './chat-command';
+import { IChatCommand, IMessageCommand } from './chat-command';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ChatSocketService {
 
-   public commands = this.socket.fromEvent<ChatCommand>('command');
-   public messages = this.socket.fromEvent<MessageCommand>('message');
+   public commands = this.socket.fromEvent<IChatCommand>('command');
+   public messages = this.socket.fromEvent<IMessageCommand>('message');
 
     constructor(private socket: Socket) {}
 
-    sendCommand(command:ChatCommand) {
+    sendCommand(command:IChatCommand) {
         this.socket.emit('command', command);
       }
 
-    sendMessage(command:MessageCommand) {
+    sendMessage(command:IMessageCommand) {
         this.socket.emit('message', command);
       }
 

@@ -4,6 +4,26 @@
     class="col-md-8 col-lg-6 justify-content-center home__chat-container p-0"
   >
     <div class="home__chat-background">
+      <div class="home__chat-component">
+      <div [ngSwitch]="commandData?.command?.type">
+        <div *ngSwitchCase="'map'">
+          <app-map [mapData]="commandData?.command"></app-map>
+        </div>
+        <div *ngSwitchCase="'rate'">
+          <app-date [dateData]="commandData?.command"></app-date>
+        </div>
+        <div *ngSwitchCase="'date'">
+          <app-date [dateData]="commandData?.command"></app-date>
+        </div>
+        <div *ngSwitchCase="'complete'">
+          <span> complete is called....</span>
+        </div>
+        <div *ngSwitchDefault>
+           <app-message [messageData]="commandData"></app-message>
+        </div>
+        </div>
+      </div>
+
       <div class="home__footer-container home__footer">
         <input
           type="text"
@@ -13,7 +33,7 @@
         />
         <div class="btn-group dropup" role="group">
           <button
-            (click)="command.style.display = 'block'"
+            (click)="commandwindow.style.display = 'block'"
             type="button"
             class="btn btn btn-dark dropdown-toggle"
             data-toggle="dropdown"
@@ -22,10 +42,7 @@
           >
             Send
           </button>
-          <div
-            #command
-            class="dropdown-menu dropdown-menu-right"
-          >
+          <div #commandwindow class="dropdown-menu dropdown-menu-right">
             <a (click)="getMessage()" class="dropdown-item">Message</a>
             <a (click)="getCommand()" class="dropdown-item">Command</a>
           </div>
