@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AgmCoreModule } from '@agm/core';
-import { AuthComponent,HomeComponent, MapComponent, DateComponent, RateComponent,MessageComponent} from './component';
+import { AuthComponent, HomeComponent, MapComponent, DateComponent, RateComponent, MessageComponent, CompleteComponent } from './component';
 
 import { ChatFeatureRoutingModule } from './chat-box-routing.module';
 
@@ -12,12 +12,13 @@ const chatComponents = [
   MapComponent,
   DateComponent,
   RateComponent,
-  MessageComponent
+  MessageComponent,
+  CompleteComponent
 ];
 
 @NgModule({
   declarations: [
-   ...chatComponents
+    ...chatComponents
   ],
   imports: [
     CommonModule,

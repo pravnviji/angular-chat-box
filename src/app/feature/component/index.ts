@@ -4,3 +4,4 @@ export * from './home/home.component';
 export * from './map/map.component';
 export * from './rate/rate.component';
 export * from './message/message.component';
+export * from './complete/complete.component';

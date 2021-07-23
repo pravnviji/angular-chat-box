@@ -15,6 +15,8 @@ export class DateComponent {
   @Input() dateData: any;
   public fileName = `DateComponent`;
   public result: string[] | undefined;
+  public showSelDate: boolean = false;
+  public userChoice : string | undefined;
 
   ngOnInit() {
     this.getTotalDays(this.dateData.data);
@@ -34,9 +36,13 @@ export class DateComponent {
     return this.result;
   }
 
-  selectDate(getDay: string) {
+  selectDate(selData: string) {
     this.logger.debug(this.fileName, 'selectDate');
-    const index = this.days.indexOf(getDay);
+    
+    this.userChoice = selData;
+    this.showSelDate = true;
+
+    const index = this.days.indexOf(selData);
     this.result = this.days.slice(index);
 
     this.result.push(...this.days.slice(0, this.days.length - this.result.length));

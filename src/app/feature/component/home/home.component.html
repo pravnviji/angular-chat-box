@@ -1,5 +1,9 @@
 <div class="row justify-content-center">
-  <h1 class="mb-3">Welcome to Chat Window</h1>
+  <h1 class="mb-3 home__chat-hdr">Welcome to Chat Window</h1>
+<div class="home__user-profile">
+  <i class="fa fa-user" aria-hidden="true">   {{user}}</i>
+  <li class="fa fa-sign-out mt-1" (click)="logout()"></li>
+</div>
   <div
     class="col-md-8 col-lg-6 justify-content-center home__chat-container p-0"
   >
@@ -10,13 +14,13 @@
           <app-map [mapData]="commandData?.command"></app-map>
         </div>
         <div *ngSwitchCase="'rate'">
-          <app-date [dateData]="commandData?.command"></app-date>
+          <app-rate [rateData]="commandData?.command"></app-rate>
         </div>
         <div *ngSwitchCase="'date'">
           <app-date [dateData]="commandData?.command"></app-date>
         </div>
         <div *ngSwitchCase="'complete'">
-          <span> complete is called....</span>
+          <app-complete [completeCommand]="commandData?.command"></app-complete >
         </div>
         <div *ngSwitchDefault>
            <app-message [messageData]="commandData"></app-message>
@@ -29,24 +33,10 @@
           type="text"
           #inputcommand
           class="home__input-text"
-          placeholder="Enter your command"
+          placeholder="Enter your command (or) message to conenct..."
         />
-        <div class="btn-group dropup" role="group">
-          <button
-            (click)="commandwindow.style.display = 'block'"
-            type="button"
-            class="btn btn btn-dark dropdown-toggle"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            Send
-          </button>
-          <div #commandwindow class="dropdown-menu dropdown-menu-right">
-            <a (click)="getMessage()" class="dropdown-item">Message</a>
-            <a (click)="getCommand()" class="dropdown-item">Command</a>
-          </div>
-        </div>
+            <button (click)="sendMessage()" class="btn btn-dark btn-sm mr-2 mt-1">Message</button>
+            <button (click)="sendCommand()" class="btn btn-dark btn-sm mr-2 mt-1">Command</button>
       </div>
     </div>
   </div>

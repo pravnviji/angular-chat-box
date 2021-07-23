@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { IChatCommand, ChatCommandTypes, ChatSocketService, Logger, IMessageCommand, IChatCommandResponse } from '../../service';
 
@@ -18,13 +19,16 @@ export class HomeComponent implements OnInit {
 
   public fileName = `HomeComponent`;
   public commandData: IChatCommandResponse | undefined;
+  public user: any;
 
 
-  constructor(private logger: Logger, private chatSocketService: ChatSocketService, private cdr : ChangeDetectorRef) {
+
+  constructor(private router: Router, private logger: Logger, private chatSocketService: ChatSocketService, private cdr: ChangeDetectorRef) {
     this.logger.debug(this.fileName, `constructor`);
   }
 
   ngOnInit(): void {
+    this.user = sessionStorage.getItem('author');
     this.subscription = this.messages$.subscribe((data) => {
       this.logger.debug(this.fileName, `:: MessageData ::`);
       this.logger.debug(this.fileName, data);
@@ -39,14 +43,14 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  getMessage(): void {
+  sendMessage(): void {
     this.logger.debug(this.fileName, `getMessage`);
     this.logger.debug(this.fileName, this.inputcommand?.nativeElement.value);
     const messageVal: IMessageCommand = { type: ChatCommandTypes.Message, author: sessionStorage.getItem('author')?.toString(), message: this.inputcommand?.nativeElement.value };
     this.chatSocketService.sendMessage(messageVal);
   }
 
-  getCommand(): void {
+  sendCommand(): void {
     this.logger.debug(this.fileName, `getCommand`);
     this.logger.debug(this.fileName, this.inputcommand?.nativeElement.value);
     const commandVal: IChatCommand = { type: this.inputcommand?.nativeElement.value };
@@ -58,4 +62,8 @@ export class HomeComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
+  logout() {
+    sessionStorage.clear();
+    this.router.navigate(['auth']);
+  }
 }

@@ -1,1 +1,11 @@
-<p>rate works!</p>
+<div *ngIf="!this.showRate">
+<div>Please give us a rating:</div>
+  <button 
+    *ngFor="let rate of getRate()"
+    (click)="selectRate(rate)"
+    class="btn btn-dark btn-sm mr-1 mt-1">{{rate}}</button>
+</div>
+<div *ngIf="this.showRate">
+    <span>Thanks for rating <span class="app-show__choice">( {{userChoice}} )</span>. Your feedback is highly appreciated and will help us to improve our quality.</span>
+  </div>
+
