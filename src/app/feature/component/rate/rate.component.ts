@@ -4,21 +4,19 @@ import { Logger } from '../../service';
 @Component({
   selector: 'app-rate',
   templateUrl: './rate.component.html',
-  styleUrls: ['./rate.component.scss']
+  styleUrls: ['./rate.component.scss'],
 })
 export class RateComponent {
-
-  @Input() rateData:any;
+  @Input() rateData: any;
   public showRate: boolean = false;
   public fileName = `RateComponent`;
 
-  public userChoice : number | undefined;
+  public userChoice: number | undefined;
 
-  constructor(private logger: Logger) { 
+  constructor(private logger: Logger) {
     this.logger.debug(this.fileName, `constructor`);
     this.logger.debug(this.fileName, this.rateData);
   }
-
 
   getRate(): number[] {
     if (this.rateData.data.length < 2) {
@@ -36,7 +34,7 @@ export class RateComponent {
     return result;
   }
 
-  selectRate(rate : number){
+  selectRate(rate: number) {
     this.userChoice = rate;
     this.showRate = true;
   }

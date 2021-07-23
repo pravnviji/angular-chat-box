@@ -1,29 +1,14 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { ChatBoxModule } from './feature/chat-box.module';
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { FormsModule } from '@angular/forms';
-
-const config: SocketIoConfig = { url: 'http://localhost', options: {} };
-
-
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
-    ChatBoxModule,
-    SocketIoModule.forRoot(config)
-  ],
+  declarations: [AppComponent],
+  imports: [AppRoutingModule, ChatBoxModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

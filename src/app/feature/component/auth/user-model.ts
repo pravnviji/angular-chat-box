@@ -1,10 +1,6 @@
-
 export class UserForm {
-    constructor(
-      public  username : string | undefined,
-      public password: string | undefined,
-    ) {  }
-  
-  }
-  
-  
+  constructor(
+    public username: string | undefined,
+    public password: string | undefined
+  ) {}
+}

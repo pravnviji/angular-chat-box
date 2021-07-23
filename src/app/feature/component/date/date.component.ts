@@ -7,7 +7,7 @@ import { Logger } from '../../service';
   styleUrls: ['./date.component.scss'],
 })
 export class DateComponent {
-  constructor(private logger: Logger) { }
+  constructor(private logger: Logger) {}
   sunday = 0;
   saturday = 6;
   days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
@@ -16,7 +16,7 @@ export class DateComponent {
   public fileName = `DateComponent`;
   public result: string[] | undefined;
   public showSelDate: boolean = false;
-  public userChoice : string | undefined;
+  public userChoice: string | undefined;
 
   ngOnInit() {
     this.getTotalDays(this.dateData.data);
@@ -31,23 +31,27 @@ export class DateComponent {
     }
 
     this.result = this.days.slice(day - 1);
-    this.result.push(...this.days.slice(0, this.days.length - this.result.length));
+    this.result.push(
+      ...this.days.slice(0, this.days.length - this.result.length)
+    );
 
     return this.result;
   }
 
   selectDate(selData: string) {
     this.logger.debug(this.fileName, 'selectDate');
-    
+
     this.userChoice = selData;
     this.showSelDate = true;
 
     const index = this.days.indexOf(selData);
     this.result = this.days.slice(index);
 
-    this.result.push(...this.days.slice(0, this.days.length - this.result.length));
+    this.result.push(
+      ...this.days.slice(0, this.days.length - this.result.length)
+    );
     this.logger.debug(this.fileName, this.result);
-    
+
     return this.result;
   }
 }

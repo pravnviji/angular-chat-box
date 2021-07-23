@@ -1,30 +1,32 @@
 <div class="row justify-content-center">
   <h1 class="mb-3 home__chat-hdr">Welcome to Chat Window</h1>
-<div class="home__user-profile">
-  <i class="fa fa-user" aria-hidden="true">   {{user}}</i>
-  <li class="fa fa-sign-out mt-1" (click)="logout()"></li>
-</div>
+  <div class="home__user-profile">
+    <i class="fa fa-user" aria-hidden="true"> {{ user }}</i>
+    <li class="fa fa-sign-out mt-1" (click)="logout()"></li>
+  </div>
   <div
     class="col-md-8 col-lg-6 justify-content-center home__chat-container p-0"
   >
     <div class="home__chat-background">
       <div class="home__chat-component">
-      <div [ngSwitch]="commandData?.command?.type">
-        <div *ngSwitchCase="'map'">
-          <app-map [mapData]="commandData?.command"></app-map>
-        </div>
-        <div *ngSwitchCase="'rate'">
-          <app-rate [rateData]="commandData?.command"></app-rate>
-        </div>
-        <div *ngSwitchCase="'date'">
-          <app-date [dateData]="commandData?.command"></app-date>
-        </div>
-        <div *ngSwitchCase="'complete'">
-          <app-complete [completeCommand]="commandData?.command"></app-complete >
-        </div>
-        <div *ngSwitchDefault>
-           <app-message [messageData]="commandData"></app-message>
-        </div>
+        <div [ngSwitch]="commandData?.command?.type">
+          <div *ngSwitchCase="'map'">
+            <app-map [mapData]="commandData?.command"></app-map>
+          </div>
+          <div *ngSwitchCase="'rate'">
+            <app-rate [rateData]="commandData?.command"></app-rate>
+          </div>
+          <div *ngSwitchCase="'date'">
+            <app-date [dateData]="commandData?.command"></app-date>
+          </div>
+          <div *ngSwitchCase="'complete'">
+            <app-complete
+              [completeCommand]="commandData?.command"
+            ></app-complete>
+          </div>
+          <div *ngSwitchDefault>
+            <app-message [messageData]="commandData"></app-message>
+          </div>
         </div>
       </div>
 
@@ -35,8 +37,12 @@
           class="home__input-text"
           placeholder="Enter your command (or) message to conenct..."
         />
-            <button (click)="sendMessage()" class="btn btn-dark btn-sm mr-2 mt-1">Message</button>
-            <button (click)="sendCommand()" class="btn btn-dark btn-sm mr-2 mt-1">Command</button>
+        <button (click)="sendMessage()" class="btn btn-dark btn-sm mr-2 mt-1">
+          Message
+        </button>
+        <button (click)="sendCommand()" class="btn btn-dark btn-sm mr-2 mt-1">
+          Command
+        </button>
       </div>
     </div>
   </div>

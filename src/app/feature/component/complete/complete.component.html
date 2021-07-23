@@ -1,7 +1,10 @@
 <div>Are you like to complete the conversation?</div>
 <div>
-  <button 
+  <button
     *ngFor="let opt of completeCommand.data"
     (click)="selectOption(opt)"
-    class="btn btn-dark btn-sm mr-1 mt-1">{{opt}}</button>
+    class="btn btn-dark btn-sm mr-1 mt-1"
+  >
+    {{ opt }}
+  </button>
 </div>

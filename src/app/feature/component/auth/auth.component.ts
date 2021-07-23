@@ -1,17 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { ChatSocketService, ChatCommandTypes, IMessageCommand, Logger } from '../../service';
+import {
+  ChatSocketService,
+  ChatCommandTypes,
+  IMessageCommand,
+  Logger,
+} from '../../service';
 import { UserForm } from './user-model';
 import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.scss']
+  styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit {
-
   public messages$: Observable<any> = this.chatSocketService.messages;
   public model: UserForm;
   public subscription!: Subscription;
@@ -19,9 +22,11 @@ export class AuthComponent implements OnInit {
 
   public fileName = `AuthComponent`;
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private logger: Logger,
-    private chatSocketService: ChatSocketService) {
+    private chatSocketService: ChatSocketService
+  ) {
     this.model = new UserForm('', '');
   }
 
@@ -32,11 +37,11 @@ export class AuthComponent implements OnInit {
       if (data.authorised) {
         sessionStorage.setItem('author', this.author);
         this.router.navigate(['home']);
-        this.logger.debug(this.fileName, "navigate");
+        this.logger.debug(this.fileName, 'navigate');
       } else {
-        alert("Invalid user");
+        alert('Invalid user');
       }
-    })
+    });
   }
 
   onSubmit() {
@@ -44,8 +49,11 @@ export class AuthComponent implements OnInit {
     const password = this.model.password;
     this.logger.debug(this.fileName, `OnSubmit`);
     this.logger.debug(this.fileName, `${username} : ${password}`);
-    this.author = (this.model.username) ? this.model.username : '';
-    const parseCommand: IMessageCommand = { type: ChatCommandTypes.Message, author: this.author };
+    this.author = this.model.username ? this.model.username : '';
+    const parseCommand: IMessageCommand = {
+      type: ChatCommandTypes.Message,
+      author: this.author,
+    };
     this.chatSocketService.sendMessage(parseCommand);
   }
 

@@ -24,20 +24,19 @@ io.on("connection", (socket) => {
 
   socket.on("message", (command) => {
     console.log(" Mesage Received");
-    if(command.author === "admin"){
-    commandProcessor(command.type);
-    console.log(commandObj);
-    socket.emit("message", commandObj);
-    }else{
+    if (command.author === "admin") {
+      commandProcessor(command.type);
+      console.log(commandObj);
+      socket.emit("message", commandObj);
+    } else {
       commandObj = {
         author: "ottonova bot",
         message: "User not found",
-        authorised: false
+        authorised: false,
       };
       socket.emit("message", commandObj);
     }
   });
-
 
   socket.on("disconnect", () => {
     console.log("a user disconnected!");
@@ -49,16 +48,14 @@ server.listen(PORT, () => {
   console.log(`Node server listening on http://localhost:${PORT}`);
 });
 
-
-
-function commandProcessor(type){
+function commandProcessor(type) {
   console.log("commandProcessor");
   switch (type) {
     case "message":
       commandObj = {
         author: "ottonova bot",
         message: "Hey Client, you said 'Hello!', right?",
-        authorised: true
+        authorised: true,
       };
       break;
     case "map":
@@ -96,11 +93,11 @@ function commandProcessor(type){
         },
       };
       break;
-      default:
-        commandObj = {
-            author: "invalid",
-            message: "Please enter the Valid Command",
-        };
-        break;
+    default:
+      commandObj = {
+        author: "invalid",
+        message: "Please enter the Valid Command",
+      };
+      break;
   }
 }

@@ -12,16 +12,17 @@ export enum LogLevel {
 /**
  * Log output handler function.
  */
-export type LogOutput = (source: string | undefined, level: LogLevel, ...objects: any[]) => void;
-
+export type LogOutput = (
+  source: string | undefined,
+  level: LogLevel,
+  ...objects: any[]
+) => void;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
-
 export class Logger {
-  constructor() { }
+  constructor() {}
   /**
    * Current logging level.
    * Set it to LogLevel.Off to disable logs completely.
@@ -82,11 +83,18 @@ export class Logger {
    * @param objects
    * @description log messages and events
    */
-  private log(source: string, func: (...args: any[]) => void, level: LogLevel, objects: any[]) {
+  private log(
+    source: string,
+    func: (...args: any[]) => void,
+    level: LogLevel,
+    objects: any[]
+  ) {
     const log = ['[' + source + '] ::'].concat(objects);
     if (level <= Logger.level) {
       func.apply(console, log);
-      Logger.outputs.forEach((output) => output.apply(output, [source, level, objects]));
+      Logger.outputs.forEach((output) =>
+        output.apply(output, [source, level, objects])
+      );
     }
   }
 }

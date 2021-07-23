@@ -1,9 +1,17 @@
-<div *ngIf="!showSelDate">Please select the most suitable day for the appointment.</div>
+<div *ngIf="!showSelDate">
+  Please select the most suitable day for the appointment.
+</div>
 <div>
-  <button 
+  <button
     *ngFor="let day of result"
     (click)="selectDate(day)"
-    class="btn btn-dark btn-sm mr-2 mt-1">{{day}}</button>
+    class="btn btn-dark btn-sm mr-2 mt-1"
+  >
+    {{ day }}
+  </button>
 </div>
-<div *ngIf="showSelDate">You have choosen <span class="app-date__choice">{{userChoice}}</span>. Please arrive 30 mins before. Even you can also update your appointment right now. </div>
-
+<div *ngIf="showSelDate">
+  You have choosen <span class="app-date__choice">{{ userChoice }}</span
+  >. Please arrive 30 mins before. Even you can also update your appointment
+  right now.
+</div>
