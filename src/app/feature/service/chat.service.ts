@@ -6,8 +6,8 @@ import { IChatCommand, IMessageCommand } from './chat-command';
   providedIn: 'root',
 })
 export class ChatSocketService {
-  public commands = this.socket.fromEvent<IChatCommand>('command');
-  public messages = this.socket.fromEvent<IMessageCommand>('message');
+  public commands$ = this.socket.fromEvent<IChatCommand>('command');
+  public messages$ = this.socket.fromEvent<IMessageCommand>('message');
 
   constructor(private socket: Socket) {}
 

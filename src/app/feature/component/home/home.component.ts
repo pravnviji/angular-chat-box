@@ -7,7 +7,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import {
   IChatCommand,
   ChatCommandTypes,
@@ -15,6 +16,7 @@ import {
   Logger,
   IMessageCommand,
   IChatCommandResponse,
+  untilDestroyed,
 } from '../../service';
 
 @Component({
@@ -26,10 +28,9 @@ import {
 export class HomeComponent implements OnInit {
   @ViewChild('inputcommand') inputcommand: ElementRef | undefined;
   @ViewChild('commandwindow') commandwindow: ElementRef | undefined;
-  public subscription!: Subscription;
 
-  public messages$: Observable<any> = this.chatSocketService.messages;
-  public commands$: Observable<any> = this.chatSocketService.commands;
+  public messages$: Observable<any> = this.chatSocketService.messages$;
+  public commands$: Observable<any> = this.chatSocketService.commands$;
 
   public fileName = `HomeComponent`;
   public commandData: IChatCommandResponse | undefined;
@@ -46,20 +47,40 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = sessionStorage.getItem('author');
-    this.subscription = this.messages$.subscribe((data) => {
-      this.logger.debug(this.fileName, `:: MessageData ::`);
-      this.logger.debug(this.fileName, data);
-      this.commandData = data;
-      this.cdr.detectChanges();
-    });
-    this.subscription = this.commands$.subscribe(
-      (data: IChatCommandResponse) => {
-        this.logger.debug(this.fileName, `:: CommandData ::`);
-        this.logger.debug(this.fileName, data);
-        this.commandData = data;
-        this.cdr.detectChanges();
-      }
-    );
+    this.getMessages();
+    this.getCommands();
+  }
+
+  getMessages() {
+    this.messages$
+      .pipe(
+        untilDestroyed(this),
+        catchError(async (error) => this.onGetFeedError(error)),
+        map((result) => this.tranformResult(result))
+      )
+      .subscribe();
+  }
+
+  getCommands() {
+    this.commands$
+      .pipe(
+        untilDestroyed(this),
+        catchError(async (error) => this.onGetFeedError(error)),
+        map((result) => this.tranformResult(result))
+      )
+      .subscribe();
+  }
+
+  tranformResult(data: IChatCommandResponse): void {
+    this.logger.debug(this.fileName, `:: CommandData ::`);
+    this.logger.debug(this.fileName, data);
+    this.commandData = data;
+    this.cdr.detectChanges();
+  }
+
+  onGetFeedError(error: any) {
+    this.logger.debug(this.fileName, `onGetFeedError`);
+    this.logger.debug(this.fileName, error);
   }
 
   sendMessage(): void {
@@ -82,13 +103,10 @@ export class HomeComponent implements OnInit {
     this.chatSocketService.sendCommand(commandVal);
   }
 
-  ngOnDestroy() {
-    this.logger.debug(this.fileName, `ngOnDestroy`);
-    this.subscription.unsubscribe();
-  }
-
   logout() {
     sessionStorage.clear();
     this.router.navigate(['auth']);
   }
+
+  ngOnDestroy() {}
 }

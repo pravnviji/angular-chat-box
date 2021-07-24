@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { Logger } from '../../service';
 
 @Component({
   selector: 'app-date',
@@ -7,19 +6,17 @@ import { Logger } from '../../service';
   styleUrls: ['./date.component.scss'],
 })
 export class DateComponent {
-  constructor(private logger: Logger) {}
   sunday = 0;
   saturday = 6;
   days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
   @Input() dateData: any;
-  public fileName = `DateComponent`;
   public result: string[] | undefined;
   public showSelDate: boolean = false;
   public userChoice: string | undefined;
 
   ngOnInit() {
-    this.getTotalDays(this.dateData.data);
+    this.getTotalDays(this.dateData?.data);
   }
 
   getTotalDays(dateString: string): string[] {
@@ -39,8 +36,6 @@ export class DateComponent {
   }
 
   selectDate(selData: string) {
-    this.logger.debug(this.fileName, 'selectDate');
-
     this.userChoice = selData;
     this.showSelDate = true;
 
@@ -50,7 +45,6 @@ export class DateComponent {
     this.result.push(
       ...this.days.slice(0, this.days.length - this.result.length)
     );
-    this.logger.debug(this.fileName, this.result);
 
     return this.result;
   }

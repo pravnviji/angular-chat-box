@@ -15,8 +15,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit {
-  public messages$: Observable<any> = this.chatSocketService.messages;
-  public model: UserForm;
+  public messages$: Observable<any> = this.chatSocketService.messages$;
+  public model: UserForm = new UserForm('', '');
   public subscription!: Subscription;
   public author!: string;
 
@@ -26,9 +26,7 @@ export class AuthComponent implements OnInit {
     private router: Router,
     private logger: Logger,
     private chatSocketService: ChatSocketService
-  ) {
-    this.model = new UserForm('', '');
-  }
+  ) {}
 
   ngOnInit(): void {
     this.subscription = this.messages$.subscribe((data) => {
